@@ -6,7 +6,7 @@
     <meta name="description" content="A demo of a card payment on Stripe" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
 
-  
+
   </head>
 
   <body>
@@ -20,19 +20,19 @@ Before selecting the file open chrome console > network tab to see the request d
 <br><br>
 (in stack overflow snippets there is problem with error handling, however in <a href="https://jsfiddle.net/Lamik/b8ed5x3y/5/">jsfiddle version</a> for 404 errors 4xx/5xx are <a href="https://stackoverflow.com/a/33355142/860099">not throwing</a> at all but we can read response status which contains code)
 	<script>
-async function SavePhoto(inp) 
+async function SavePhoto(inp)
 {
     let user = { name:'john', age:34 };
     let formData = new FormData();
-    let photo = inp.files[0];      
-         
+    let photo = inp.files[0];
+
     formData.append("photo", photo);
-    formData.append("user", JSON.stringify(user));  
-    
+    formData.append("user", JSON.stringify(user));
+
     try {
-       //let r = await fetch('/upload/image', {method: "POST", body: formData}); 
+       //let r = await fetch('/upload/image', {method: "POST", body: formData});
        //console.log('HTTP response code:',r.status);
-		
+
 		const url = 'https://qfhszadoc0.execute-api.ap-south-1.amazonaws.com/default/getPresignedURL';
 		fetch(url,{
 		method:'GET',
@@ -40,30 +40,37 @@ async function SavePhoto(inp)
 		.then((res) => res.json())
 		.then((response) => {
 		 //console.log(response);
-		  console.log(response);
-          console.log(response.body["uploadURL"]);
-          console.log(response.body["photoFilename"]);
-			
+		  console.log(response,typeof response );
+      var body_obj = res.body.json();
+      var b_obj = res.body;
+      console.log(b_obj,b_obj.uploadURL);
+      console.log('#############');
+      console.log(body_obj, body_obj.uploadURL);
+
+
+          //console.log(body_obj.uploadURL);
+          //console.log(body_obj["photoFilename"]);
+
 			fetch(response.body.uploadURL ,
 			{
 			method:'PUT',
-			headers: 
+			headers:
 			{ 'Content-Type': 'image/jpeg', 'x-amz-acl': 'public-read' },
 			mode: 'cors',
 			body: photo
 			})
 			.then((res) => console.log(res))
 			.catch((err) => console.log(err))
-			
+
 		})
-		
-		
-		
-	   
+
+
+
+
     } catch(e) {
        console.log('Huston we have problem...:', e);
     }
-    
+
 }
 	</script>
   </body>
