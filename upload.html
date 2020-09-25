@@ -43,8 +43,9 @@ async function SavePhoto(inp)
 		  console.log(response,typeof response );
       //var body_obj = response.body.json();
       var b_obj = response.body;
+      var onto_some =  JSON.parse(b_obj);
       //var body_obj = b_obj.json();
-      console.log(b_obj,b_obj.uploadURL);
+      console.log(b_obj,b_obj.uploadURL,onto_some.uploadURL);
       console.log('#############');
       //console.log(body_obj, body_obj.uploadURL);
 
