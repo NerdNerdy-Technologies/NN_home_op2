@@ -41,8 +41,8 @@ async function SavePhoto(inp)
 		.then((response) => {
 		 //console.log(response);
 		  console.log(response);
-          console.log(response.body.uploadURL);
-          console.log(response.body.photoFilename);
+          console.log(response.body["uploadURL"]);
+          console.log(response.body["photoFilename"]);
 			
 			fetch(response.body.uploadURL ,
 			{
